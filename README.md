@@ -38,6 +38,58 @@ int performOperation(int op1, int op2, char op)
         break;
     }
     return ans;
+    string InfixToPostfix(string expression)
+{
+	stack<char> S;
+	string postfix = ""; 
+	for(int i = 0;i< expression.length();i++) {
+
+		if(expression[i] == ' ' || expression[i] == ',') continue; 
+
+		else if(IsOperator(expression[i])) 
+		{
+			while(!S.empty() && S.top() != '(' && HasHigherPrecedence(S.top(),expression[i]))
+			{
+				postfix+= S.top();
+				S.pop();
+			}
+			S.push(expression[i]);
+		}
+		else if(IsOperand(expression[i]))
+		{
+			postfix +=expression[i];
+		}
+
+		else if (expression[i] == '(') 
+		{
+			S.push(expression[i]);
+		}
+
+		else if(expression[i] == ')') 
+		{
+			while(!S.empty() && S.top() !=  '(') {
+				postfix += S.top();
+				S.pop();
+			}
+			S.pop();
+		}
+	}
+
+	while(!S.empty()) {
+		postfix += S.top();
+		S.pop();
+	}
+
+	return postfix;
+}
+
+bool IsOperand(char C) 
+{
+	if(C >= '0' && C <= '9') return true;
+	if(C >= 'a' && C <= 'z') return true;
+	if(C >= 'A' && C <= 'Z') return true;
+	return false;
+}
 }
 int main(){
 string expression;
