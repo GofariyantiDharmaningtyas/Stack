@@ -39,43 +39,38 @@ int performOperation(int op1, int op2, char op)
     }
     return ans;
 }
-    int main() 
-{
-	string expression; 
-	cout<<"Enter Infix Expression \n";
-	getline(cin,expression);
-	string postfix = InfixToPostfix(expression);
-	cout<<"Postfix = "<<postfix<<"\n";
-	char exp[1000], buffer[15];
-    int i,op1, op2, len, j, x;
-    stack<int> s;cout<<"Lets calculate the output! Give space between every operands n operators!";
-	gets(exp);
-    len = strlen(exp);
-    j = 0;
-    for(i=0; i<len;i++){
-
-        if(exp[i]>='0' && exp[i]<='9'){
-            buffer[j++] = exp[i];
-        }
-        else if(exp[i]==' '){
-            if(j>0){
-                buffer[j] = '\0';
-                x = atoi(buffer);
-                s.push(x);
-                j = 0;
-            }
-        }
-
-        else if(isOperator(exp[i])){
-            op1 = s.top();
-            s.pop();
-            op2 = s.top();
-            s.pop();
-            s.push(performOperation(op1, op2, exp[i]));
-        }
-    }
-
-    cout<<"jawabannya adalah "<<s.top();
-
-    return 0;
+int main(){
+string expression;
+cout<<"Enter Infix Expression:\n";
+getline(cin,expression);
+string postfix=InfixToPosfix(expression);
+cout<<"Postfix = "<<postfix<<"\n";
+char exp[1000], buffer[15];
+int i,op1, op2, len, j, x;
+stack<int> s;
+cout<<"Lets calculate the output! Give space between every operands n operators!";
+cin>>exp;
+len = strlen(exp);
+j=0;
+for(i=0; i<len;i++){
+	if(exp[i]>='0' && exp[i]<='9'){
+	buffer[j++] = exp[i];
+	}
+	else if(exp[i]==' '){
+		if(j>0){
+		buffer[j] = '\0';
+		x = atoi(buffer);
+		s.push(x);
+		j=0;
+	}
 }
+	
+	else if(isOperator(exp[i])){
+	op1 = s.top();
+	s.pop();
+	op2 = s.top();
+	s.pop();
+	s.push(performOperation(op1, op2, exp[i]));
+	}
+}
+cout<<"jawabannya adalah "<<s.top();
